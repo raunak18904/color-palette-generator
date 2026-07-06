@@ -1,0 +1,235 @@
+/* =========================================
+   RESET
+========================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--background);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+}
+
+/* =========================================
+   VARIABLES
+========================================= */
+:root {
+  --primary: #6c5ce7;
+  --primary-dark: #5849c2;
+  --secondary: #00cec9;
+
+  --background: #f5f6fa;
+  --surface: #ffffff;
+
+  --text: #2d3436;
+  --text-muted: #636e72;
+
+  --border: #e2e4f0;
+
+  --border-radius: 16px;
+  --border-radius-sm: 8px;
+
+  --shadow-sm: 0 2px 8px rgba(45, 52, 54, 0.06);
+  --shadow-md: 0 8px 24px rgba(45, 52, 54, 0.10);
+  --shadow-lg: 0 16px 40px rgba(45, 52, 54, 0.16);
+
+  --transition-base: 0.3s ease;
+
+  --max-width: 1200px;
+}
+
+/* =========================================
+   LAYOUT
+========================================= */
+.app-main {
+  flex: 1;
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+.app-header {
+  text-align: center;
+  padding: 3.5rem 1.5rem 1rem;
+}
+
+.app-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.app-subtitle {
+  margin-top: 0.75rem;
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+/* =========================================
+   CONTROLS
+========================================= */
+.controls-section {
+  display: flex;
+  justify-content: center;
+}
+
+.generate-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1rem 2.5rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  border-radius: var(--border-radius-sm);
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-base), box-shadow var(--transition-base), filter var(--transition-base);
+}
+
+.generate-btn i {
+  font-size: 1rem;
+}
+
+.generate-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  filter: brightness(1.05);
+}
+
+.generate-btn:active {
+  transform: translateY(-1px) scale(0.98);
+  box-shadow: var(--shadow-sm);
+}
+
+.generate-btn:focus-visible {
+  outline: 3px solid var(--primary-dark);
+  outline-offset: 3px;
+}
+
+/* =========================================
+   PALETTE
+========================================= */
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.5rem;
+}
+
+.color-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.color-card:hover,
+.color-card:focus-within {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+.color-preview {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-bottom: 1px solid var(--border);
+  transition: background-color var(--transition-base);
+}
+
+.hex-value {
+  text-align: center;
+  padding: 1rem 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--text);
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+.app-footer {
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  background-color: var(--surface);
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+/* Laptop */
+@media (max-width: 1024px) {
+  .palette-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Tablet (2 + 2 + 1 layout) */
+@media (max-width: 768px) {
+  .palette-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .app-header {
+    padding: 2.5rem 1.25rem 0.75rem;
+  }
+
+  .app-main {
+    padding: 2rem 1.25rem 3rem;
+    gap: 2.25rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .generate-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem 1.5rem;
+  }
+}
