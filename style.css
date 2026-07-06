@@ -1,4 +1,87 @@
 /* =========================================
+   VARIABLES
+   Design tokens — single source of truth for
+   color, spacing, radius, shadow, and motion.
+========================================= */
+:root {
+  /* Core palette */
+  --primary: #6c5ce7;
+  --primary-dark: #5646c9;
+  --primary-light: #8a7ff0;
+  --secondary: #00cec9;
+  --accent: #ff7edb;
+
+  /* Surfaces */
+  --background: #f7f7fb;
+  --background-alt: #eef0fa;
+  --surface: #ffffff;
+  --surface-hover: #fbfbfe;
+
+  /* Text */
+  --text: #1c1d2e;
+  --text-muted: #6b6d85;
+  --text-faint: #9698ad;
+
+  /* Borders */
+  --border: #e6e7f2;
+  --border-strong: #d4d6e8;
+
+  /* Radius */
+  --border-radius: 20px;
+  --border-radius-lg: 24px;
+  --border-radius-sm: 12px;
+  --border-radius-pill: 999px;
+
+  /* Shadows — soft, layered, low-opacity for a premium feel */
+  --shadow-xs: 0 1px 2px rgba(28, 29, 46, 0.04);
+  --shadow-sm: 0 2px 6px rgba(28, 29, 46, 0.05), 0 1px 2px rgba(28, 29, 46, 0.04);
+  --shadow-md: 0 8px 24px rgba(28, 29, 46, 0.08), 0 2px 8px rgba(28, 29, 46, 0.04);
+  --shadow-lg: 0 20px 48px rgba(28, 29, 46, 0.14), 0 6px 16px rgba(28, 29, 46, 0.06);
+  --shadow-glow: 0 0 0 4px rgba(108, 92, 231, 0.12);
+
+  /* Motion */
+  --transition-fast: 180ms ease;
+  --transition-base: 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Layout */
+  --max-width: 1180px;
+  --spacing-section: clamp(2.5rem, 5vw, 4.5rem);
+
+  /* Toast */
+  --toast-bg: #1c1d2e;
+  --toast-text: #ffffff;
+
+  /* Lock accent */
+  --lock-color: var(--text-faint);
+  --lock-color-active: var(--primary);
+}
+
+/* Dark theme overrides — toggled via [data-theme="dark"] on <html> */
+[data-theme='dark'] {
+  --background: #0f1020;
+  --background-alt: #14152a;
+  --surface: #191a30;
+  --surface-hover: #1e1f38;
+
+  --text: #f2f2f8;
+  --text-muted: #a3a5c2;
+  --text-faint: #74768f;
+
+  --border: #2a2c48;
+  --border-strong: #383a5c;
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.28), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.36), 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.5), 0 6px 16px rgba(0, 0, 0, 0.3);
+  --shadow-glow: 0 0 0 4px rgba(138, 127, 240, 0.22);
+
+  --toast-bg: #f2f2f8;
+  --toast-text: #14152a;
+}
+
+/* =========================================
    RESET
 ========================================= */
 *,
@@ -13,14 +96,26 @@ html {
   scroll-behavior: smooth;
 }
 
+/* =========================================
+   BASE
+========================================= */
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: var(--background);
+  font-weight: 400;
   color: var(--text);
   line-height: 1.6;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+
+  /* Subtle, elegant gradient backdrop instead of flat white */
+  background-color: var(--background);
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(108, 92, 231, 0.07), transparent 42%),
+    radial-gradient(circle at 88% 0%, rgba(0, 206, 201, 0.06), transparent 40%),
+    linear-gradient(180deg, var(--background) 0%, var(--background-alt) 100%);
+  background-attachment: fixed;
+
   transition: background-color var(--transition-base), color var(--transition-base);
 }
 
@@ -34,58 +129,17 @@ button {
   cursor: pointer;
   border: none;
   background: none;
+  color: inherit;
 }
 
-/* =========================================
-   VARIABLES
-========================================= */
-:root {
-  --primary: #6c5ce7;
-  --primary-dark: #5849c2;
-  --secondary: #00cec9;
-
-  --background: #f5f6fa;
-  --surface: #ffffff;
-
-  --text: #2d3436;
-  --text-muted: #636e72;
-
-  --border: #e2e4f0;
-
-  --border-radius: 16px;
-  --border-radius-sm: 8px;
-
-  --shadow-sm: 0 2px 8px rgba(45, 52, 54, 0.06);
-  --shadow-md: 0 8px 24px rgba(45, 52, 54, 0.10);
-  --shadow-lg: 0 16px 40px rgba(45, 52, 54, 0.16);
-
-  --transition-base: 0.3s ease;
-
-  --max-width: 1200px;
-
-  --lock-color: var(--text-muted);
-  --lock-color-active: var(--primary);
-
-  --toast-bg: #2d3436;
-  --toast-text: #ffffff;
+button:focus-visible,
+[data-hex]:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
 }
 
-/* Dark theme overrides. Toggled via [data-theme="dark"] on <html>. */
-[data-theme='dark'] {
-  --background: #1a1b2e;
-  --surface: #24263d;
-
-  --text: #f1f2f6;
-  --text-muted: #a4a6c2;
-
-  --border: #383a5c;
-
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
-  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
-
-  --toast-bg: #f1f2f6;
-  --toast-text: #1a1b2e;
+::selection {
+  background-color: rgba(108, 92, 231, 0.2);
 }
 
 /* =========================================
@@ -96,10 +150,10 @@ button {
   width: 100%;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 2.5rem 1.5rem 4rem;
+  padding: 0 1.75rem var(--spacing-section);
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: var(--spacing-section);
 }
 
 /* =========================================
@@ -108,50 +162,55 @@ button {
 .app-header {
   position: relative;
   text-align: center;
-  padding: 3.5rem 1.5rem 1rem;
+  padding: clamp(3rem, 8vw, 5rem) 1.75rem clamp(1.5rem, 3vw, 2rem);
 }
 
 .app-title {
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(2.1rem, 4vw, 3.25rem);
   font-weight: 700;
   color: var(--text);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
 }
 
 .app-subtitle {
-  margin-top: 0.75rem;
-  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  margin-top: 0.85rem;
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
   font-weight: 400;
   color: var(--text-muted);
+  letter-spacing: -0.005em;
 }
 
-/* Dark mode toggle, pinned to the top-right of the header */
+/* Dark mode toggle — pinned top-right, understated pill/circle */
 .theme-toggle-btn {
   position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  width: 44px;
-  height: 44px;
+  top: clamp(1.25rem, 3vw, 2rem);
+  right: clamp(1.25rem, 3vw, 2rem);
+  width: 46px;
+  height: 46px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   background-color: var(--surface);
-  color: var(--text);
-  box-shadow: var(--shadow-sm);
-  font-size: 1.1rem;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  box-shadow: var(--shadow-xs);
+  font-size: 1.05rem;
   transition: transform var(--transition-base), box-shadow var(--transition-base),
-    background-color var(--transition-base), color var(--transition-base);
+    background-color var(--transition-base), color var(--transition-base),
+    border-color var(--transition-base);
 }
 
 .theme-toggle-btn:hover {
-  transform: translateY(-2px) rotate(15deg);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+  color: var(--primary);
+  border-color: var(--border-strong);
 }
 
-.theme-toggle-btn:focus-visible {
-  outline: 3px solid var(--primary);
-  outline-offset: 3px;
+.theme-toggle-btn:active {
+  transform: translateY(0) scale(0.95);
 }
 
 /* =========================================
@@ -165,35 +224,38 @@ button {
 .generate-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
-  padding: 1rem 2.5rem;
-  font-size: 1.05rem;
+  gap: 0.65rem;
+  padding: 1.05rem 2.75rem;
+  font-size: 1.02rem;
   font-weight: 600;
+  letter-spacing: -0.01em;
   color: #ffffff;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  border-radius: var(--border-radius-sm);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  border-radius: var(--border-radius-pill);
   box-shadow: var(--shadow-md);
-  transition: transform var(--transition-base), box-shadow var(--transition-base), filter var(--transition-base);
+  transition: transform var(--transition-base), box-shadow var(--transition-base),
+    filter var(--transition-base);
 }
 
 .generate-btn i {
-  font-size: 1rem;
+  font-size: 0.95rem;
 }
 
 .generate-btn:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-lg);
-  filter: brightness(1.05);
+  filter: brightness(1.06);
 }
 
 .generate-btn:active {
-  transform: translateY(-1px) scale(0.98);
+  transform: translateY(-1px) scale(0.97);
   box-shadow: var(--shadow-sm);
+  filter: brightness(1);
 }
 
 .generate-btn:focus-visible {
   outline: 3px solid var(--primary-dark);
-  outline-offset: 3px;
+  outline-offset: 4px;
 }
 
 /* =========================================
@@ -203,10 +265,14 @@ button {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 1.5rem;
+  align-items: stretch;
 }
 
 .color-card {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   background-color: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--border-radius);
@@ -219,14 +285,15 @@ button {
 
 .color-card:hover,
 .color-card:focus-within {
-  transform: translateY(-6px);
+  transform: translateY(-6px) scale(1.015);
   box-shadow: var(--shadow-lg);
+  border-color: var(--border-strong);
 }
 
-/* Locked cards get a visible, distinct treatment */
+/* Locked cards get a clear, non-color-only visual treatment */
 .color-card[data-locked='true'] {
   border-color: var(--lock-color-active);
-  box-shadow: 0 0 0 2px var(--lock-color-active), var(--shadow-md);
+  box-shadow: var(--shadow-glow), var(--shadow-md);
 }
 
 .color-preview {
@@ -238,48 +305,54 @@ button {
 
 .hex-value {
   width: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  padding: 1rem 0.5rem;
-  font-size: 1rem;
+  padding: 1.1rem 0.75rem;
+  font-size: 0.98rem;
   font-weight: 500;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
   color: var(--text);
   background-color: var(--surface);
   transition: color var(--transition-base), background-color var(--transition-base);
 }
 
-.hex-value:focus-visible {
-  outline: 3px solid var(--primary);
-  outline-offset: -3px;
+.hex-value:hover {
+  background-color: var(--surface-hover);
+  color: var(--primary);
 }
 
-/* Lock button, top-right corner of each card, sits above the preview */
+/* Lock button — subtle glass chip, top-right of each card */
 .lock-btn {
   position: absolute;
-  top: 0.6rem;
-  right: 0.6rem;
+  top: 0.7rem;
+  right: 0.7rem;
   z-index: 2;
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   color: var(--lock-color);
   font-size: 0.85rem;
-  box-shadow: var(--shadow-sm);
-  transition: transform var(--transition-base), background-color var(--transition-base),
-    color var(--transition-base);
+  box-shadow: var(--shadow-xs);
+  transition: transform var(--transition-fast), background-color var(--transition-base),
+    color var(--transition-base), box-shadow var(--transition-base);
 }
 
 .lock-btn:hover {
-  transform: scale(1.1);
+  transform: scale(1.12);
+  box-shadow: var(--shadow-sm);
 }
 
-.lock-btn:focus-visible {
-  outline: 3px solid var(--primary-dark);
-  outline-offset: 2px;
+.lock-btn:active {
+  transform: scale(0.95);
 }
 
 .lock-btn[data-locked='true'] {
@@ -292,28 +365,29 @@ button {
 ========================================= */
 .toast-container {
   position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
+  bottom: 1.75rem;
+  right: 1.75rem;
   z-index: 1000;
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.65rem;
   pointer-events: none;
 }
 
 .toast {
-  min-width: 140px;
-  max-width: 260px;
-  padding: 0.75rem 1.1rem;
+  min-width: 150px;
+  max-width: 270px;
+  padding: 0.8rem 1.2rem;
   border-radius: var(--border-radius-sm);
   background-color: var(--toast-bg);
   color: var(--toast-text);
   font-size: 0.9rem;
   font-weight: 500;
+  letter-spacing: -0.005em;
   box-shadow: var(--shadow-lg);
   opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transform: translateY(14px);
+  transition: opacity var(--transition-base), transform var(--transition-base);
 }
 
 .toast--visible {
@@ -326,14 +400,23 @@ button {
 ========================================= */
 .app-footer {
   text-align: center;
-  padding: 1.5rem;
-  font-size: 0.9rem;
+  padding: 1.75rem;
+  font-size: 0.88rem;
   font-weight: 400;
   color: var(--text-muted);
   border-top: 1px solid var(--border);
   background-color: var(--surface);
-  transition: background-color var(--transition-base), border-color var(--transition-base);
+  transition: background-color var(--transition-base), border-color var(--transition-base),
+    color var(--transition-base);
 }
+
+/* =========================================
+   ANIMATIONS
+   (transitions defined inline per-component above;
+   this section reserved for shared keyframes as
+   future features — e.g. toast entrance variants —
+   are added, to avoid scattering @keyframes rules)
+========================================= */
 
 /* =========================================
    RESPONSIVE
@@ -353,12 +436,12 @@ button {
   }
 
   .app-header {
-    padding: 2.5rem 1.25rem 0.75rem;
+    padding: 2.5rem 1.25rem 1rem;
   }
 
   .app-main {
-    padding: 2rem 1.25rem 3rem;
-    gap: 2.25rem;
+    padding: 0 1.25rem 3rem;
+    gap: 2.5rem;
   }
 
   .theme-toggle-btn {
@@ -388,5 +471,17 @@ button {
   .toast {
     max-width: none;
     width: 100%;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 360px) {
+  .app-title {
+    font-size: 1.75rem;
+  }
+
+  .lock-btn {
+    width: 30px;
+    height: 30px;
   }
 }
