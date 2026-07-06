@@ -422,44 +422,129 @@ button:focus-visible,
    RESPONSIVE
 ========================================= */
 
-/* Laptop */
-@media (max-width: 1024px) {
+/* Large Desktop (1400px+) */
+@media (min-width: 1400px) {
+
+  .app-main {
+    max-width: 1320px;
+  }
+
   .palette-grid {
-    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .color-preview {
+    aspect-ratio: 1 / 1;
   }
 }
 
-/* Tablet (2 + 2 + 1 layout) */
-@media (max-width: 768px) {
+
+/* Desktop / Laptop */
+@media (max-width: 1200px) {
+
+  .app-main {
+    padding-inline: 1.5rem;
+  }
+
   .palette-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.4rem;
+  }
+
+}
+
+
+/* Small Laptop */
+@media (max-width: 992px) {
+
+  .palette-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
   }
 
   .app-header {
-    padding: 2.5rem 1.25rem 1rem;
+    padding: 2.8rem 1.4rem 1.8rem;
   }
 
+  .generate-btn {
+    padding: 1rem 2.25rem;
+  }
+
+}
+
+
+/* Tablet */
+@media (max-width: 768px) {
+
   .app-main {
-    padding: 0 1.25rem 3rem;
+    padding: 0 1.2rem 2.5rem;
     gap: 2.5rem;
   }
 
+  .palette-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .app-header {
+    padding: 2.5rem 1rem 1.5rem;
+  }
+
+  .app-title {
+    line-height: 1.2;
+  }
+
   .theme-toggle-btn {
+    width: 42px;
+    height: 42px;
     top: 1rem;
     right: 1rem;
-  }
-}
-
-/* Mobile */
-@media (max-width: 480px) {
-  .palette-grid {
-    grid-template-columns: 1fr;
   }
 
   .generate-btn {
     width: 100%;
+    max-width: 350px;
     justify-content: center;
-    padding: 1rem 1.5rem;
+  }
+
+  .controls-section {
+    padding-inline: .5rem;
+  }
+
+  .hex-value {
+    padding: .95rem;
+    font-size: .92rem;
+  }
+
+}
+
+
+/* Large Mobile */
+@media (max-width: 576px) {
+
+  .app-main {
+    padding-inline: 1rem;
+  }
+
+  .palette-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .color-card {
+    max-width: 420px;
+    width: 100%;
+    margin-inline: auto;
+  }
+
+  .generate-btn {
+    width: 100%;
+    padding: 1rem;
+    font-size: .98rem;
+  }
+
+  .theme-toggle-btn {
+    width: 40px;
+    height: 40px;
   }
 
   .toast-container {
@@ -469,19 +554,88 @@ button:focus-visible,
   }
 
   .toast {
-    max-width: none;
     width: 100%;
+    max-width: none;
   }
+
 }
 
-/* Small mobile */
-@media (max-width: 360px) {
+
+/* Mobile */
+@media (max-width: 480px) {
+
+  .app-header {
+    padding-top: 4.2rem;
+  }
+
   .app-title {
-    font-size: 1.75rem;
+    font-size: 1.9rem;
+  }
+
+  .app-subtitle {
+    font-size: .95rem;
+  }
+
+  .color-preview {
+    aspect-ratio: 1 / 0.9;
+  }
+
+  .lock-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+}
+
+
+/* Small Mobile */
+@media (max-width: 360px) {
+
+  .app-main {
+    padding-inline: .75rem;
+  }
+
+  .app-title {
+    font-size: 1.65rem;
+  }
+
+  .app-subtitle {
+    font-size: .9rem;
+  }
+
+  .generate-btn {
+    font-size: .9rem;
+    padding: .9rem;
+  }
+
+  .hex-value {
+    font-size: .85rem;
+    letter-spacing: .04em;
   }
 
   .lock-btn {
     width: 30px;
     height: 30px;
+    top: .55rem;
+    right: .55rem;
   }
+
+}
+
+
+/* Landscape Phones */
+@media (max-height: 500px) and (orientation: landscape) {
+
+  .app-header {
+    padding: 1.5rem 1rem;
+  }
+
+  .app-main {
+    gap: 2rem;
+  }
+
+  .color-preview {
+    aspect-ratio: 1 / 0.8;
+  }
+
 }
