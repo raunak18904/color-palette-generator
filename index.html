@@ -16,6 +16,16 @@
 <body>
 
   <header class="app-header">
+    <button
+      type="button"
+      class="theme-toggle-btn"
+      id="themeToggleBtn"
+      aria-pressed="false"
+      aria-label="Toggle dark mode"
+    >
+      <i class="fa-solid fa-moon" aria-hidden="true"></i>
+    </button>
+
     <h1 class="app-title">Color Palette Generator</h1>
     <p class="app-subtitle">Generate beautiful color combinations instantly.</p>
   </header>
@@ -33,28 +43,78 @@
       <div class="palette-grid">
 
         <article class="color-card" data-card-index="0">
+          <button
+            type="button"
+            class="lock-btn"
+            data-lock-btn
+            data-locked="false"
+            aria-pressed="false"
+            aria-label="Lock this color"
+          >
+            <i class="fa-solid fa-lock-open" aria-hidden="true"></i>
+          </button>
           <div class="color-preview" data-preview style="background-color:#FFFFFF;"></div>
-          <p class="hex-value" data-hex>#FFFFFF</p>
+          <button type="button" class="hex-value" data-hex aria-label="Copy hex code">#FFFFFF</button>
         </article>
 
         <article class="color-card" data-card-index="1">
+          <button
+            type="button"
+            class="lock-btn"
+            data-lock-btn
+            data-locked="false"
+            aria-pressed="false"
+            aria-label="Lock this color"
+          >
+            <i class="fa-solid fa-lock-open" aria-hidden="true"></i>
+          </button>
           <div class="color-preview" data-preview style="background-color:#FFFFFF;"></div>
-          <p class="hex-value" data-hex>#FFFFFF</p>
+          <button type="button" class="hex-value" data-hex aria-label="Copy hex code">#FFFFFF</button>
         </article>
 
         <article class="color-card" data-card-index="2">
+          <button
+            type="button"
+            class="lock-btn"
+            data-lock-btn
+            data-locked="false"
+            aria-pressed="false"
+            aria-label="Lock this color"
+          >
+            <i class="fa-solid fa-lock-open" aria-hidden="true"></i>
+          </button>
           <div class="color-preview" data-preview style="background-color:#FFFFFF;"></div>
-          <p class="hex-value" data-hex>#FFFFFF</p>
+          <button type="button" class="hex-value" data-hex aria-label="Copy hex code">#FFFFFF</button>
         </article>
 
         <article class="color-card" data-card-index="3">
+          <button
+            type="button"
+            class="lock-btn"
+            data-lock-btn
+            data-locked="false"
+            aria-pressed="false"
+            aria-label="Lock this color"
+          >
+            <i class="fa-solid fa-lock-open" aria-hidden="true"></i>
+          </button>
           <div class="color-preview" data-preview style="background-color:#FFFFFF;"></div>
-          <p class="hex-value" data-hex>#FFFFFF</p>
+          <button type="button" class="hex-value" data-hex aria-label="Copy hex code">#FFFFFF</button>
         </article>
 
         <article class="color-card" data-card-index="4">
+          <button
+            type="button"
+            class="lock-btn"
+            data-lock-btn
+            data-locked="false"
+            aria-pressed="false"
+            aria-label="Lock this color"
+          >
+            <i class="fa-solid fa-lock-open" aria-hidden="true"></i>
+          </button>
           <div class="color-preview" data-preview style="background-color:#FFFFFF;"></div>
-          <p class="hex-value" data-hex>#FFFFFF</p>
+          <button type="button" class="hex-value" data-hex aria-label="Copy hex code">#FFFFFF</button>
         </article>
 
       </div>
@@ -65,6 +125,9 @@
   <footer class="app-footer">
     <p>Built with HTML, CSS and JavaScript</p>
   </footer>
+
+  <!-- Toast notification container: single, reusable, off unrelated flow -->
+  <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
 
   <script src="script.js"></script>
 </body>

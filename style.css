@@ -21,6 +21,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  transition: background-color var(--transition-base), color var(--transition-base);
 }
 
 img {
@@ -32,6 +33,7 @@ button {
   font-family: inherit;
   cursor: pointer;
   border: none;
+  background: none;
 }
 
 /* =========================================
@@ -60,6 +62,30 @@ button {
   --transition-base: 0.3s ease;
 
   --max-width: 1200px;
+
+  --lock-color: var(--text-muted);
+  --lock-color-active: var(--primary);
+
+  --toast-bg: #2d3436;
+  --toast-text: #ffffff;
+}
+
+/* Dark theme overrides. Toggled via [data-theme="dark"] on <html>. */
+[data-theme='dark'] {
+  --background: #1a1b2e;
+  --surface: #24263d;
+
+  --text: #f1f2f6;
+  --text-muted: #a4a6c2;
+
+  --border: #383a5c;
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
+
+  --toast-bg: #f1f2f6;
+  --toast-text: #1a1b2e;
 }
 
 /* =========================================
@@ -80,6 +106,7 @@ button {
    HEADER
 ========================================= */
 .app-header {
+  position: relative;
   text-align: center;
   padding: 3.5rem 1.5rem 1rem;
 }
@@ -96,6 +123,35 @@ button {
   font-size: clamp(1rem, 1.5vw, 1.15rem);
   font-weight: 400;
   color: var(--text-muted);
+}
+
+/* Dark mode toggle, pinned to the top-right of the header */
+.theme-toggle-btn {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+  font-size: 1.1rem;
+  transition: transform var(--transition-base), box-shadow var(--transition-base),
+    background-color var(--transition-base), color var(--transition-base);
+}
+
+.theme-toggle-btn:hover {
+  transform: translateY(-2px) rotate(15deg);
+  box-shadow: var(--shadow-md);
+}
+
+.theme-toggle-btn:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
 }
 
 /* =========================================
@@ -141,7 +197,7 @@ button {
 }
 
 /* =========================================
-   PALETTE
+   CARDS
 ========================================= */
 .palette-grid {
   display: grid;
@@ -150,19 +206,27 @@ button {
 }
 
 .color-card {
+  position: relative;
   background-color: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-sm);
   overflow: hidden;
   cursor: pointer;
-  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  transition: transform var(--transition-base), box-shadow var(--transition-base),
+    background-color var(--transition-base), border-color var(--transition-base);
 }
 
 .color-card:hover,
 .color-card:focus-within {
   transform: translateY(-6px);
   box-shadow: var(--shadow-lg);
+}
+
+/* Locked cards get a visible, distinct treatment */
+.color-card[data-locked='true'] {
+  border-color: var(--lock-color-active);
+  box-shadow: 0 0 0 2px var(--lock-color-active), var(--shadow-md);
 }
 
 .color-preview {
@@ -173,12 +237,88 @@ button {
 }
 
 .hex-value {
+  width: 100%;
   text-align: center;
   padding: 1rem 0.5rem;
   font-size: 1rem;
   font-weight: 500;
   letter-spacing: 0.05em;
   color: var(--text);
+  background-color: var(--surface);
+  transition: color var(--transition-base), background-color var(--transition-base);
+}
+
+.hex-value:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: -3px;
+}
+
+/* Lock button, top-right corner of each card, sits above the preview */
+.lock-btn {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  z-index: 2;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.85);
+  color: var(--lock-color);
+  font-size: 0.85rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-base), background-color var(--transition-base),
+    color var(--transition-base);
+}
+
+.lock-btn:hover {
+  transform: scale(1.1);
+}
+
+.lock-btn:focus-visible {
+  outline: 3px solid var(--primary-dark);
+  outline-offset: 2px;
+}
+
+.lock-btn[data-locked='true'] {
+  color: #ffffff;
+  background-color: var(--lock-color-active);
+}
+
+/* =========================================
+   TOAST
+========================================= */
+.toast-container {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  pointer-events: none;
+}
+
+.toast {
+  min-width: 140px;
+  max-width: 260px;
+  padding: 0.75rem 1.1rem;
+  border-radius: var(--border-radius-sm);
+  background-color: var(--toast-bg);
+  color: var(--toast-text);
+  font-size: 0.9rem;
+  font-weight: 500;
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.toast--visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* =========================================
@@ -192,6 +332,7 @@ button {
   color: var(--text-muted);
   border-top: 1px solid var(--border);
   background-color: var(--surface);
+  transition: background-color var(--transition-base), border-color var(--transition-base);
 }
 
 /* =========================================
@@ -219,6 +360,11 @@ button {
     padding: 2rem 1.25rem 3rem;
     gap: 2.25rem;
   }
+
+  .theme-toggle-btn {
+    top: 1rem;
+    right: 1rem;
+  }
 }
 
 /* Mobile */
@@ -231,5 +377,16 @@ button {
     width: 100%;
     justify-content: center;
     padding: 1rem 1.5rem;
+  }
+
+  .toast-container {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  .toast {
+    max-width: none;
+    width: 100%;
   }
 }
