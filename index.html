@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Palette Generator</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="app-header">
+    <h1 class="app-title">Color Palette Generator</h1>
+    <p class="app-subtitle">Generate beautiful color combinations instantly.</p>
+  </header>
+
+  <main class="app-main">
+
+    <section class="controls-section" aria-label="Palette controls">
+      <button type="button" class="generate-btn" id="generateBtn">
+        <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
+        Generate Palette
+      </button>
+    </section>
+
+    <section class="palette-section" aria-label="Color palette results">
+      <div class="palette-grid">
+
+        <article class="color-card" data-card-index="0">
+          <div class="color-preview" data-preview style="background-color:#FFFFFF;"></div>
+          <p class="hex-value" data-hex>#FFFFFF</p>
+        </article>
+
+        <article class="color-card" data-card-index="1">
+          <div class="color-preview" data-preview style="background-color:#FFFFFF;"></div>
+          <p class="hex-value" data-hex>#FFFFFF</p>
+        </article>
+
+        <article class="color-card" data-card-index="2">
+          <div class="color-preview" data-preview style="background-color:#FFFFFF;"></div>
+          <p class="hex-value" data-hex>#FFFFFF</p>
+        </article>
+
+        <article class="color-card" data-card-index="3">
+          <div class="color-preview" data-preview style="background-color:#FFFFFF;"></div>
+          <p class="hex-value" data-hex>#FFFFFF</p>
+        </article>
+
+        <article class="color-card" data-card-index="4">
+          <div class="color-preview" data-preview style="background-color:#FFFFFF;"></div>
+          <p class="hex-value" data-hex>#FFFFFF</p>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>Built with HTML, CSS and JavaScript</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
